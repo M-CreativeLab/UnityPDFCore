@@ -12,3 +12,5 @@ $ make
 ## License
 
 See [COPYING](./COPYING) for details, because this project is modified from [MuPDF][], so the license is same as [MuPDF][].
+
+[MuPDF]: https://github.com/ArtifexSoftware/mupdf
