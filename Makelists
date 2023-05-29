@@ -88,6 +88,7 @@ HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-buffer.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-buffer-verify.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-buffer-serialize.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-common.cc
+HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-draw.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-face.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-fallback-shape.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-font.cc
@@ -122,6 +123,9 @@ HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-ot-shaper-use.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-ot-shaper-vowel-constraints.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-ot-tag.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-ot-var.cc
+HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-outline.cc
+HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-paint.cc
+HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-paint-extents.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-set.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-shape.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-shape-plan.cc
@@ -289,11 +293,13 @@ JBIG2DEC_SRC += thirdparty/jbig2dec/jbig2_text.c
 
 # --- OPENJPEG ---
 
+OPENJPEG_CFLAGS += -Iscripts/openjpeg
 OPENJPEG_CFLAGS += -Ithirdparty/openjpeg/src/lib/openjp2
 OPENJPEG_CFLAGS += -DOPJ_STATIC
 OPENJPEG_CFLAGS += -DOPJ_HAVE_INTTYPES_H
 OPENJPEG_CFLAGS += -DOPJ_HAVE_STDINT_H
 
+OPENJPEG_BUILD_CFLAGS += -Iscripts/openjpeg
 OPENJPEG_BUILD_CFLAGS += -Ithirdparty/openjpeg/src/lib/openjp2
 OPENJPEG_BUILD_CFLAGS += -DMUTEX_pthread=0
 
