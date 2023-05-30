@@ -204,7 +204,7 @@ include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := mupdf_java
+LOCAL_MODULE := mupdf
 
 LOCAL_C_INCLUDES += $(MUPDF_PATH)/include
 

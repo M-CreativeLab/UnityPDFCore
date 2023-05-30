@@ -1,5 +1,3 @@
-#include <jni.h>
-
 #ifndef _Included_unity_api_header
 #define _Included_unity_api_header
 #ifdef __cplusplus

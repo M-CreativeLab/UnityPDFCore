@@ -1342,8 +1342,6 @@ static void bgprint_flush(void)
 
 static void drawpage(fz_context *ctx, fz_document *doc, int pagenum, PageList *pagelist)
 {
-    fprintf(stdout, "drawpage started\n");
-
     fz_page *page;
     fz_display_list *list = NULL;
     fz_device *dev = NULL;
@@ -1362,11 +1360,9 @@ static void drawpage(fz_context *ctx, fz_document *doc, int pagenum, PageList *p
     start = (showtime ? gettime() : 0);
 
     page = fz_load_page(ctx, doc, pagenum - 1);
-    fprintf(stdout, "drawpage fz_load_page %d\n", pagenum - 1);
 
     if (spots != SPOTS_NONE)
     {
-        fprintf(stdout, "drawpage spots != SPOTS_NONE\n");
         fz_try(ctx)
         {
             seps = fz_page_separations(ctx, page);
@@ -1404,7 +1400,6 @@ static void drawpage(fz_context *ctx, fz_document *doc, int pagenum, PageList *p
 
     if (uselist)
     {
-        fprintf(stdout, "drawpage uselist\n");
         fz_try(ctx)
         {
             list = fz_new_display_list(ctx, fz_bound_page(ctx, page));
@@ -1537,6 +1532,11 @@ static void drawpage(fz_context *ctx, fz_document *doc, int pagenum, PageList *p
         }
         fz_always(ctx)
         {
+            // Release the out and buffer
+            // fz_drop_output(ctx, out);
+            fz_drop_buffer(ctx, buf);
+
+            // Release the list seps and page.
             fz_drop_display_list(ctx, list);
             fz_drop_separations(ctx, seps);
             fz_drop_page(ctx, page);
@@ -2081,6 +2081,7 @@ int DrawPdfPages(char *filename, PageList *pagelist)
     resolution = 200;
     res_specified = 1;
     output_file_per_page = 1;
+    lowmemory = 1;
     format = "png";
     output = "page-%d.png";
     // output = "result_%d.png";
