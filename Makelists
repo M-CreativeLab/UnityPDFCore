@@ -90,6 +90,7 @@ HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-buffer-serialize.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-common.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-draw.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-face.cc
+HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-face-builder.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-fallback-shape.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-font.cc
 HARFBUZZ_SRC += thirdparty/harfbuzz/src/hb-ft.cc

@@ -7,6 +7,13 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <mupdf/unity/api.h>
+
+JNIEXPORT int DrawPdfPages_Java(char* filename, PageList* pagelist) {
+	return DrawPdfPages(filename, pagelist);
+}
+
 /*
  * Class:     com_artifex_mupdf_fitz_Archive
  * Method:    finalize

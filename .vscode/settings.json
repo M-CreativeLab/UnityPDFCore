@@ -1,0 +1,23 @@
+{
+    "C_Cpp.errorSquiggles": "disabled",
+    "files.associations": {
+        "fitz.h": "c",
+        "__locale": "c",
+        "random": "c",
+        "filesystem": "c",
+        "*.inc": "c",
+        "__availability": "c",
+        "__config": "c",
+        "cstdio": "c",
+        "ctime": "c",
+        "cwchar": "c",
+        "locale": "c",
+        "regex": "c",
+        "version": "c",
+        "chrono": "c",
+        "array": "c",
+        "vector": "c",
+        "string.h": "c",
+        "api.h": "c"
+    }
+}
