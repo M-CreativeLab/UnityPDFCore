@@ -2056,7 +2056,7 @@ static void save_accelerator(fz_context *ctx, fz_document *doc, const char *fnam
     fz_save_accelerator(ctx, doc, absname);
 }
 
-int DrawPdfPages(char *filename, int resolution, int num_workers, int band_height, PageList *pagelist)
+int DrawPdfPages(char *filename, int m_resolution, int m_num_workers, int m_band_height, PageList *pagelist)
 {
     char *password = "";
     fz_document *doc = NULL;
@@ -2075,6 +2075,11 @@ int DrawPdfPages(char *filename, int resolution, int num_workers, int band_heigh
     showtime = 1;
     format = "png";
     output = "page-%d.png";
+
+    // set by parameters
+    resolution = m_resolution;
+    num_workers = m_num_workers;
+    band_height = m_band_height;
 
     //     while ((c = fz_getopt(argc, argv, "qp:o:F:R:r:w:h:fB:c:e:G:Is:A:DiW:H:S:T:t:d:U:XLvPl:y:Yz:Z:NO:am:K")) != -1)
     //     {
