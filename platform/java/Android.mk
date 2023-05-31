@@ -92,6 +92,7 @@ LOCAL_SRC_FILES += $(wildcard $(MUPDF_PATH)/source/cbz/*.c)
 LOCAL_SRC_FILES += $(wildcard $(MUPDF_PATH)/source/html/*.c)
 LOCAL_SRC_FILES += $(wildcard $(MUPDF_PATH)/source/unity/*.c)
 LOCAL_SRC_FILES += $(wildcard $(MUPDF_PATH)/source/helpers/pkcs7/*.c)
+LOCAL_SRC_FILES += $(wildcard $(MUPDF_PATH)/source/helpers/mu-threads/mu-threads.c)
 
 LOCAL_SRC_FILES += $(wildcard $(MUPDF_PATH)/generated/resources/fonts/urw/*.c)
 

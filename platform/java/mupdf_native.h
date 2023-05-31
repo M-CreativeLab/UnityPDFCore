@@ -10,8 +10,8 @@ extern "C" {
 
 #include <mupdf/unity/api.h>
 
-JNIEXPORT int DrawPdfPages_Java(char* filename, PageList* pagelist) {
-	return DrawPdfPages(filename, pagelist);
+JNIEXPORT int DrawPdfPages_Java(char* filename, int resolution, int num_workers, int band_height, PageList* pagelist) {
+	return DrawPdfPages(filename, resolution, num_workers, band_height, pagelist);
 }
 
 /*
