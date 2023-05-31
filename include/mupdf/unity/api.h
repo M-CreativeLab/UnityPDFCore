@@ -17,7 +17,7 @@ typedef struct
 	int count;
 } PageList;
 
-int DrawPdfPages(char* filename, PageList* pageList);
+int DrawPdfPages(char *filename, int resolution, int num_workers, int band_height, PageList *pagelist);
 
 #ifdef __cplusplus
 }

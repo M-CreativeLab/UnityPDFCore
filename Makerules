@@ -68,11 +68,12 @@ SANITIZE_FLAGS += -fsanitize=leak
 
 ifeq ($(shared),yes)
   build_prefix += shared-
-  LIB_CFLAGS = -fPIC
+  LIB_CFLAGS = -fPIC -lpthread
+  LIB_LDFLAGS = -lpthread
   ifeq ($(OS),MACOS)
-    LIB_LDFLAGS = -dynamiclib
+    LIB_LDFLAGS += -dynamiclib
   else
-    LIB_LDFLAGS = -shared
+    LIB_LDFLAGS += -shared
   endif
 else
   LIB_CFLAGS =

@@ -286,7 +286,7 @@ endif
 THREAD_LIB = $(OUT)/libmupdf-threads.a
 PKCS7_LIB = $(OUT)/libmupdf-pkcs7.a
 
-$(MUPDF_LIB) : $(MUPDF_OBJ) $(THIRD_OBJ)
+$(MUPDF_LIB) : $(MUPDF_OBJ) $(THIRD_OBJ) $(THREAD_LIB)
 $(THIRD_GLUT_LIB) : $(THIRD_GLUT_OBJ)
 $(THREAD_LIB) : $(THREAD_OBJ)
 $(PKCS7_LIB) : $(PKCS7_OBJ)
@@ -398,8 +398,8 @@ endif
 
 examples: $(OUT)/example $(OUT)/multi-threaded $(OUT)/storytest
 
-$(OUT)/example: docs/examples/example.c $(MUPDF_LIB) $(THIRD_LIB)
-	$(LINK_CMD) $(CFLAGS) $(THIRD_LIBS)
+$(OUT)/example: docs/examples/example.c $(MUPDF_LIB) $(THIRD_LIB) $(THREAD_LIB)
+	$(LINK_CMD) $(CFLAGS) -DHAVE_PTHREAD -lpthread $(THIRD_LIBS)
 $(OUT)/multi-threaded: docs/examples/multi-threaded.c $(MUPDF_LIB) $(THIRD_LIB)
 	$(LINK_CMD) $(CFLAGS) $(THIRD_LIBS) -lpthread
 $(OUT)/storytest: docs/examples/storytest.c $(MUPDF_LIB) $(THIRD_LIB)

@@ -340,7 +340,7 @@ static int layout_use_doc_css = 1;
 static float min_line_width = 0.0f;
 
 static int showfeatures = 0;
-static int showtime = 0;
+static int showtime = 1;
 static int showmemory = 0;
 static int showmd5 = 0;
 
@@ -639,7 +639,6 @@ static void apply_kill_switch(fz_device *dev)
 
 static void drawband(fz_context *ctx, fz_page *page, fz_display_list *list, fz_matrix ctm, fz_rect tbounds, fz_cookie *cookie, int band_start, fz_pixmap *pix, fz_bitmap **bit)
 {
-    fprintf(stdout, "drawband %d\n", page->number);
     fz_device *dev = NULL;
 
     fz_var(dev);
@@ -996,8 +995,6 @@ static void dodrawpage(fz_context *ctx, fz_page *page, fz_display_list *list, in
     }
     else
     {
-        fprintf(stdout, "mutool: unknown output format '%s'\n", output);
-
         float zoom;
         fz_matrix ctm;
         fz_rect tbounds;
@@ -1116,7 +1113,6 @@ static void dodrawpage(fz_context *ctx, fz_page *page, fz_display_list *list, in
                 fz_set_pixmap_resolution(ctx, pix, resolution, resolution);
             }
 
-            fprintf(stdout, "output is %d\n", output);
             /* Output any page level headers (for banded formats) */
             if (output)
             {
@@ -1431,7 +1427,6 @@ static void drawpage(fz_context *ctx, fz_document *doc, int pagenum, PageList *p
 
     if (showfeatures)
     {
-        fprintf(stdout, "drawpage showfeatures\n");
         int iscolor;
         dev = fz_new_test_device(ctx, &iscolor, 0.02f, 0, NULL);
         apply_kill_switch(dev);
@@ -1462,22 +1457,17 @@ static void drawpage(fz_context *ctx, fz_document *doc, int pagenum, PageList *p
 
     if (output_file_per_page)
     {
-        fprintf(stdout, "drawpage output_file_per_page\n");
-        // char text_buffer[512];
-
         bgprint_flush();
         if (out)
         {
             fz_close_output(ctx, out);
             fz_drop_output(ctx, out);
         }
+        // char text_buffer[512];
         // fz_format_output_path(ctx, text_buffer, sizeof text_buffer, output, pagenum);
         // out = fz_new_output_with_path(ctx, text_buffer, 0);
-
-        fprintf(stdout, "create buffer for output\n");
         buf = fz_new_buffer(ctx, 1024);
         out = fz_new_output_with_buffer(ctx, buf);
-        fprintf(stdout, "page %d %p %p\n", pagenum, buf, out);
     }
 
     if (bgprint.active)
@@ -1495,7 +1485,7 @@ static void drawpage(fz_context *ctx, fz_document *doc, int pagenum, PageList *p
         else if (bgprint.active)
         {
             if (!quiet || showfeatures || showtime || showmd5)
-                fprintf(stderr, "page %s %d%s", filename, pagenum, features);
+                fprintf(stderr, "page %s %d%s\n", filename, pagenum, features);
 
             bgprint.started = 1;
             bgprint.page = page;
@@ -1517,7 +1507,7 @@ static void drawpage(fz_context *ctx, fz_document *doc, int pagenum, PageList *p
     else
     {
         if (!quiet || showfeatures || showtime || showmd5)
-            fprintf(stderr, "page %s %d%s", filename, pagenum, features);
+            fprintf(stderr, "page %s %d%s\n", filename, pagenum, features);
         fz_try(ctx)
         {
             dodrawpage(ctx, page, list, pagenum, &cookie, start, 0, filename, 0, seps);
@@ -1529,6 +1519,7 @@ static void drawpage(fz_context *ctx, fz_document *doc, int pagenum, PageList *p
             page->len = (int)buf->len;
             page->data = (unsigned char *)malloc(buf->len);
             memcpy(page->data, buf->data, buf->len);
+            fprintf(stdout, "got a page image %d\n", buf->len);
         }
         fz_always(ctx)
         {
@@ -2065,7 +2056,7 @@ static void save_accelerator(fz_context *ctx, fz_document *doc, const char *fnam
     fz_save_accelerator(ctx, doc, absname);
 }
 
-int DrawPdfPages(char *filename, PageList *pagelist)
+int DrawPdfPages(char *filename, int resolution, int num_workers, int band_height, PageList *pagelist)
 {
     char *password = "";
     fz_document *doc = NULL;
@@ -2078,13 +2069,12 @@ int DrawPdfPages(char *filename, PageList *pagelist)
     size_t max_store = FZ_STORE_DEFAULT;
 
     fz_var(doc);
-    resolution = 200;
     res_specified = 1;
     output_file_per_page = 1;
     lowmemory = 1;
+    showtime = 1;
     format = "png";
     output = "page-%d.png";
-    // output = "result_%d.png";
 
     //     while ((c = fz_getopt(argc, argv, "qp:o:F:R:r:w:h:fB:c:e:G:Is:A:DiW:H:S:T:t:d:U:XLvPl:y:Yz:Z:NO:am:K")) != -1)
     //     {
@@ -2354,6 +2344,7 @@ int DrawPdfPages(char *filename, PageList *pagelist)
             int i;
             int fail = 0;
             workers = fz_calloc(ctx, num_workers, sizeof(*workers));
+            fprintf(stdout, "workers: %d %p\n", num_workers, workers);
             for (i = 0; i < num_workers; i++)
             {
                 workers[i].ctx = fz_clone_context(ctx);

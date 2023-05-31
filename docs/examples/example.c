@@ -135,7 +135,11 @@ int main(int argc, char **argv)
 	// return EXIT_SUCCESS;
 
 	PageList pagelist;
-	DrawPdfPages("/Users/yorkie/Desktop/2305.16151.pdf", &pagelist);
-
+	DrawPdfPages(
+		"/Users/yorkie/Desktop/2305.16196.pdf",
+		180,	// resolution
+		8,		// num_workers
+		100,	// band_height
+		&pagelist);
 	return 0;
 }

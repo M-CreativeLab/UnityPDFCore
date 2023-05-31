@@ -44,6 +44,8 @@
 	appropriately.
 */
 
+#define HAVE_PTHREAD
+
 #if !defined(DISABLE_MUTHREADS)
 #ifdef _WIN32
 #define MU_THREAD_IMPL_TYPE 1

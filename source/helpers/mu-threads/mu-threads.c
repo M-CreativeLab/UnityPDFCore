@@ -21,6 +21,7 @@
 // CA 94129, USA, for further information.
 
 #include "mupdf/helpers/mu-threads.h"
+#include <stdio.h>
 
 #ifdef DISABLE_MUTHREADS
 
