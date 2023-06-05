@@ -541,6 +541,7 @@ shared: shared-$(build)
 
 shared-release:
 	$(MAKE) shared=yes build=release
+	cp build/shared-release/libmupdf.dylib build/shared-release/libMuPDFWrapper.dylib
 shared-debug:
 	$(MAKE) shared=yes build=debug
 shared-clean:
