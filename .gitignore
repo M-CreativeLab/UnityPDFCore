@@ -17,6 +17,7 @@ node_modules
 # Editor and file browser turds:
 *~
 .*.swp
+.books
 .DS_Store
 \#*\#
 

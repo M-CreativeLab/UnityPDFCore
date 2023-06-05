@@ -1519,7 +1519,6 @@ static void drawpage(fz_context *ctx, fz_document *doc, int pagenum, PageList *p
             page->len = (int)buf->len;
             page->data = (unsigned char *)malloc(buf->len);
             memcpy(page->data, buf->data, buf->len);
-            fprintf(stdout, "got a page image %d\n", buf->len);
         }
         fz_always(ctx)
         {

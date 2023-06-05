@@ -80,6 +80,9 @@ else
   LIB_LDFLAGS =
 endif
 
+CFLAGS += -std=c++14
+LDFLAGS += -lstdc++
+
 ifeq ($(build),debug)
   CFLAGS += -pipe -g
   LDFLAGS += -g

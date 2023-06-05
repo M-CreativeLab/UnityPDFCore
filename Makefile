@@ -54,8 +54,8 @@ ifneq ($(verbose),yes)
 endif
 
 MKTGTDIR = mkdir -p $(dir $@)
-CC_CMD = $(QUIET_CC) $(MKTGTDIR) ; $(CC) $(CFLAGS) -MMD -MP -o $@ -c $<
-CXX_CMD = $(QUIET_CXX) $(MKTGTDIR) ; $(CXX) $(CFLAGS) $(XCXXFLAGS) -MMD -MP -o $@ -c $<
+CC_CMD = $(QUIET_CC) $(MKTGTDIR) ; $(CC) $(CFLAGS) -std=c11 -MMD -MP -o $@ -c $<
+CXX_CMD = $(QUIET_CXX) $(MKTGTDIR) ; $(CXX) $(CFLAGS) $(XCXXFLAGS) -std=c++11 -MMD -MP -o $@ -c $<
 AR_CMD = $(QUIET_AR) $(MKTGTDIR) ; $(AR) cr $@ $^
 ifdef RANLIB
   RANLIB_CMD = $(QUIET_RANLIB) $(RANLIB) $@
@@ -68,7 +68,7 @@ GENDEF_CMD = $(QUIET_GENDEF) gendef - $< > $@
 DLLTOOL_CMD = $(QUIET_DLLTOOL) dlltool -d $< -D $(notdir $(^:%.def=%.dll)) -l $@
 
 ifeq ($(shared),yes)
-LINK_CMD = $(QUIET_LINK) $(MKTGTDIR) ; $(CC) $(LDFLAGS) -o $@ \
+LINK_CMD = $(QUIET_LINK) $(MKTGTDIR) ; $(CC) -std=c++11 $(LDFLAGS) -o $@ \
 	$(filter-out %.$(SO),$^) \
 	$(sort $(patsubst %,-L%,$(dir $(filter %.$(SO),$^)))) \
 	$(patsubst lib%.$(SO),-l%,$(notdir $(filter %.$(SO),$^))) \
@@ -158,7 +158,7 @@ MUPDF_SRC += $(sort $(wildcard source/svg/*.c))
 MUPDF_SRC += $(sort $(wildcard source/html/*.c))
 MUPDF_SRC += $(sort $(wildcard source/reflow/*.c))
 MUPDF_SRC += $(sort $(wildcard source/cbz/*.c))
-MUPDF_SRC += $(sort $(wildcard source/unity/*.c))
+MUPDF_SRC += $(sort $(wildcard source/unity/*.c)) $(sort $(wildcard source/unity/*.cpp))
 
 MUPDF_OBJ := $(MUPDF_SRC:%.c=$(OUT)/%.o)
 MUPDF_OBJ := $(MUPDF_OBJ:%.cpp=$(OUT)/%.o)
@@ -548,6 +548,7 @@ shared-clean:
 
 android: generate
 	ndk-build -j8 \
+		APP_STL=c++_static \
 		APP_BUILD_SCRIPT=platform/java/Android.mk \
 		APP_PROJECT_PATH=build/android \
 		APP_PLATFORM=android-16 \

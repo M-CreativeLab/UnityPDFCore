@@ -40,7 +40,6 @@ include $(MUPDF_PATH)/Makelists
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := mupdf_core
-
 LOCAL_C_INCLUDES := $(MUPDF_PATH)/include
 
 LOCAL_CFLAGS += -ffunction-sections -fdata-sections
@@ -90,13 +89,13 @@ LOCAL_SRC_FILES += $(wildcard $(MUPDF_PATH)/source/xps/*.c)
 LOCAL_SRC_FILES += $(wildcard $(MUPDF_PATH)/source/svg/*.c)
 LOCAL_SRC_FILES += $(wildcard $(MUPDF_PATH)/source/cbz/*.c)
 LOCAL_SRC_FILES += $(wildcard $(MUPDF_PATH)/source/html/*.c)
-LOCAL_SRC_FILES += $(wildcard $(MUPDF_PATH)/source/unity/*.c)
+LOCAL_SRC_FILES += $(wildcard $(MUPDF_PATH)/source/unity/MuPDFWrapper.cpp)
 LOCAL_SRC_FILES += $(wildcard $(MUPDF_PATH)/source/helpers/pkcs7/*.c)
 LOCAL_SRC_FILES += $(wildcard $(MUPDF_PATH)/source/helpers/mu-threads/mu-threads.c)
-
 LOCAL_SRC_FILES += $(wildcard $(MUPDF_PATH)/generated/resources/fonts/urw/*.c)
 
 LOCAL_CFLAGS += $(MUPDF_EXTRA_CFLAGS)
+LOCAL_LDLIBS += -lstdc++
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -212,7 +211,8 @@ LOCAL_C_INCLUDES += $(MUPDF_PATH)/include
 LOCAL_CFLAGS += -DHAVE_ANDROID
 LOCAL_CFLAGS += $(MUPDF_EXTRA_CFLAGS)
 
-LOCAL_SRC_FILES += $(MUPDF_PATH)/platform/java/mupdf_native.c
+# LOCAL_SRC_FILES += $(MUPDF_PATH)/platform/java/mupdf_native.cpp
+LOCAL_SRC_FILES += $(MUPDF_PATH)/platform/java/mupdf_core_native.cpp
 
 ifdef ADD_SOURCE_FILES
 LOCAL_SRC_FILES += $(ADD_SOURCE_FILES)
@@ -244,6 +244,7 @@ LOCAL_LDLIBS += -lz
 LOCAL_LDLIBS += -lm
 
 LOCAL_LDFLAGS := -Wl,--gc-sections
+LOCAL_LDFLAGS += -static-libstdc++
 LOCAL_LDFLAGS += $(MUPDF_EXTRA_LDFLAGS)
 
 include $(BUILD_SHARED_LIBRARY)
