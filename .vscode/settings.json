@@ -19,6 +19,7 @@
         "vector": "c",
         "string.h": "c",
         "api.h": "c",
-        "mu-threads.h": "c"
+        "mu-threads.h": "c",
+        "list": "cpp"
     }
 }

@@ -519,4 +519,20 @@ extern "C"
 	/// <param name="ctx">A pointer to the native context to free.</param>
 	/// <returns>An integer detailing whether any errors occurred.</returns>
 	DLL_PUBLIC int DisposeContext(fz_context* ctx);
+
+	/// <summary>
+	/// Set the layout parameters for a document.
+	/// </summary>
+	/// <param name="ctx">The context that was used in creating the document.</param>
+	/// <param name="doc">The document whose layout parameters should be set.</param>
+	/// <param name="w">The width of the viewport.</param>
+	/// <param name="h">The height of the viewport.</param>
+	/// <param name="em">The size of the em-square.</param>	
+	DLL_PUBLIC void SetLayoutParameters(fz_context* ctx, fz_document* doc, float w, float h, float em);
+
+	/// <summary>
+	/// Install the system font, only works on Android platform.
+	/// </summary>
+	/// <param name="ctx">The context that was used in creating the document.</param>
+	DLL_PUBLIC void InstallLoadSystemFonts(fz_context* ctx);
 }
